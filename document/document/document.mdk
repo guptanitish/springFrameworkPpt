@@ -1,0 +1,25 @@
+[INCLUDE=presentation]
+Title         : Basics of Spring Framework
+Sub Title     : Motivation for spring and how it works
+Author        : Nitish Gupta
+Reveal Theme  : sky
+Beamer Theme  : singapore
+
+[TITLE]
+
+# Content
+
+[TOC]
+
+# Motivation
+## dependency injection
+
+~~ Notes
+What is a dependency?
+~~
+
+## Aspect Oriented Programming
+
+## Do not repeat yourself (dry)
+
+[madoko]: http://madoko.codeplex.com
