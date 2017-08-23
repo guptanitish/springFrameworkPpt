@@ -1,0 +1,305 @@
+[INCLUDE=presentation]
+Title         : Introduction to Spring Framework
+Sub Title     : Motivation for spring and basics of how it works
+Author        : (blatantly copied from serveral online resources, mostly book Spring in Action)
+Reveal Theme  : sky
+Beamer Theme  : singapore
+
+[TITLE]
+
+# Content
+
+[TOC]
+
+
+# Motivation
+## Problem #1
+
+```java
+  package sia.knights;
+
+public class DamselRescuingKnight implements Knight {
+
+  private RescueDamselQuest quest;
+
+  public DamselRescuingKnight() {
+    this.quest = new RescueDamselQuest();
+  }
+
+  public void embarkOnQuest() {
+    quest.embark();
+  }
+
+}
+```
+~~ Notes
+  * what is wrong with this class?
+~~
+
+## Problem #1
+
+  * quest is a dependency of a DamselRescuingKnight class.
+  * Tightly coupled code - knight can only go on RescueDamselQuest 
+  ~~ Notes
+   how would knight slay the dragon?
+  ~~
+  * object initialized within class with new operator. how would you test? how would you mock the dependency?
+
+## "Injecting" Dependencies
+
+  * Giving object its own dependencies than having to as opposed to object acquiring its own dependencies
+  * "Foo" class has dependencies "Bar" and "Baz", which are "injected" into "Foo".
+
+## "Injecting" Dependencies
+
+![dependency_injection]
+
+[dependency_injection]: images/dependency_injection.png "dependency_injection" { width:50%; max-width:200% }
+
+## "Injecting" Dependencies
+
+```java
+package sia.knights;
+  
+public class BraveKnight implements Knight {
+
+  private Quest quest;
+
+  public BraveKnight(Quest quest) {
+    this.quest = quest;
+  }
+
+  public void embarkOnQuest() {
+    quest.embark();
+  }
+
+}
+ ```
+~~ Notes
+  Quest is an interface
+  Quest is "injected" into brave knight. 
+  He can even slay the dragon, if you "inject" such a quest.
+~~
+
+## "Injecting" Dependencies - Advantages
+
+* BraveKnight no longer coupled to a quest. 
+* Mock an implementation of Quest to test it.
+~~ Notes
+  Backup slide
+~~
+
+## Problem #2
+
+Business logic is mixed with logging, metrics, etc.
+
+Logging, metrics, etc are common across components
+
+![aspects]
+
+[aspects]: images/aspects.jpg "aspects" { width:auto; max-width:90% }
+
+## Aspect Oriented Programming
+
+Now, we can focus on business logic - logging, metrics security, etc. do not "litter" application logic
+
+![aspecsCorrectWay]
+
+[aspecsCorrectWay]: images/aspecsCorrectWay.jpg "aspecsCorrectWay" { width:auto; max-width:90% }
+
+## Aspect-oriented-programming
+
+Spring has support for aspects.
+
+## Do not repeat yourself (DRY)
+
+Eg writing db code - get connection, handle exception, retry - everytime
+Spring reduces boilerplate code by providing templates (eg JDBC template)
+
+## Some background about spring
+
+* Adopted as alternative to Enterprise Java Beans (EJB)
+* Light weight "container" to provide services to **POJOs** 
+* (POJO = Plain Old Java Object i.e. not tied to framework)
+* Developed in 2002-3 by Rod Johnson. Spring 1.0 in 2004
+* 2006 -> Spring 2.0 -> XML Config
+* 2006 -> Spring 2.5 -> Annotation Config
+* 2016 (June) --> Latest Major Verion = Spring 4 
+
+## Some background about spring
+
+* Spring is modular - Bunch of different projects and sub-projects depending on what you want
+* Has a lot of projects - Being added and developed actively!
+* Lets you do a LOT of different stuff.
+
+## Some background about spring
+
+Official website: https://spring.io/ 
+
+~~ Notes
+These days spring boot! But fundamentals same.
+For now, lets focus on core Spring Framework.
+~~ 
+
+## Spring High Level View
+
+![spring high level view]
+
+[spring high level view]: images/spring-high-level-view.png "spring high level view" { width:100%; max-width:90% }
+
+~~ Notes
+Plus template beans which spring provide (depend on project you choose)
+~~
+
+## Spring container
+
+* Spring container is responsible for creating objects( **"managed objects"** or** "beans"**) and managing their complete life cycle from creation till destruction.
+* Which objects should it manage? depends upon what configuration you provide to spring.
+
+~~ Notes
+Not every class need to be a bean - can create beans "outside" spring container.
+~~
+
+## Spring beans
+
+A **Bean** is an object that is instantiated, assembled, and otherwise managed by a Spring container.
+Generally a singleton (default), but need not be (called prototype bean)
+
+## How to inject beans using spring
+
+Lets go back to our BraveKnight class: 
+
+```java
+package sia.knights;
+  
+public class BraveKnight implements Knight {
+
+  private Quest quest;
+
+  public BraveKnight(Quest quest) {
+    this.quest = quest;
+  }
+
+  public void embarkOnQuest() {
+    quest.embark();
+  }
+
+}
+ ```
+## How to inject beans using spring
+
+Suppose we have this implementation of quest interface:
+```java
+ package sia.knights;
+
+import java.io.PrintStream;
+
+public class SlayDragonQuest implements Quest {
+
+  private PrintStream stream;
+
+  public SlayDragonQuest(PrintStream stream) {
+    this.stream = stream;
+  }
+
+  public void embark() {
+    stream.println("Embarking on quest to slay the dragon!");
+  }
+
+}
+```
+
+## How to inject beans using spring
+
+Here **Configuration** is the metadata we provide to spring to create those beans.
+(can be in java, or in xml)
+Can have multiple of these configuration files which can be imported.
+
+Using java style:
+
+```java
+package sia.knights.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import sia.knights.BraveKnight;
+import sia.knights.Knight;
+import sia.knights.Quest;
+import sia.knights.SlayDragonQuest;
+
+@Configuration
+@Import (other config files) 
+public class KnightConfig {
+
+  @Bean
+  public Knight knight() {
+    return new BraveKnight(quest());
+  }
+  
+  @Bean
+  public Quest quest() {
+    return new SlayDragonQuest(System.out);
+  }
+
+}
+```
+## How to inject beans using spring
+Using xml :(
+
+![xmlConfig]
+
+[xmlConfig]: images/xmlConfig.jpg "xmlConfig" { width:100%; max-width:90% }
+
+
+## How to inject beans using spring
+
+Finally, here's the main method
+```java
+package sia.knights;
+
+import org.springframework.context.support.
+                   ClassPathXmlApplicationContext;
+
+public class KnightMain {
+
+  public static void main(String[] args) throws Exception {
+    ClassPathXmlApplicationContext context = 
+        new ClassPathXmlApplicationContext(
+            "META-INF/spring/knight.xml");
+    Knight knight = context.getBean(Knight.class);
+    knight.embarkOnQuest();
+    context.close();
+  }
+
+}
+```
+
+## How to configure beans
+
+* Java based config (recommended) - one place, compiled
+* Annotation based config - easy, de-centralized
+* Xml based config ( not recommended)
+
+
+## "Injecting" Dependencies - Advantages (Backup)
+```java
+package sia.knights;
+import static org.mockito.Mockito.*;
+
+import org.junit.Test;
+
+import sia.knights.BraveKnight;
+import sia.knights.Quest;
+
+public class BraveKnightTest {
+
+  public void knightShouldEmbarkOnQuest() {
+    Quest mockQuest = mock(Quest.class);
+    BraveKnight knight = new BraveKnight(mockQuest);
+    knight.embarkOnQuest();
+    verify(mockQuest, times(1)).embark();
+  }
+
+}
+```
