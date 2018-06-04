@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta name="generator" content="Madoko, version 1.1.6" />
+  <meta name="viewport" content="initial-scale=1.0" />
+  <title>Introduction to Spring Framework</title>
+  <style type="text/css"  class="link">
+  /*# sourceURL=madoko.css */
+  
+  .madoko .toc>.tocblock .tocblock .tocblock {
+    margin-left: 2.25em;
+  }
+  .madoko .toc>.tocblock .tocblock {
+    margin-left: 1.5em;
+  }
+  .madoko .toc-contents>.tocblock>.tocitem {
+    font-weight: bold;
+  }
+  .madoko .toc {
+    margin-top: 1em;
+  }
+  .madoko p.para-continue {
+    margin-bottom: 0pt;
+  }
+  .madoko .para-block+p {
+    margin-top: 0pt;
+  }
+  .madoko ul.para-block, .madoko ol.para-block {
+    margin-top: 0pt;
+    margin-bottom: 0pt;
+  }
+  .madoko ul.para-end, .madoko ol.para-end {
+    margin-bottom: 1em;
+  }
+  .madoko dl {
+    margin-left: 0em;
+  }
+  .madoko blockquote {
+    font-style: italic;
+  }
+  .madoko a.localref {
+    text-decoration: none;
+  }
+  .madoko a.localref:hover {
+    text-decoration: underline;
+  }
+  .madoko .footnotes {
+    font-size: smaller;
+    margin-top: 2em;
+  }
+  .madoko .footnotes hr {
+    width: 50%;
+    text-align: left;
+  }
+  .madoko .footnote { 
+    margin-left: 1em;
+  }
+  .madoko .footnote-before {
+    margin-left: -1em;
+    width: 1em;
+    display: inline-block;
+  }
+  .madoko .align-center, .madoko .align-center>p {
+    text-align: center !important;
+  }
+  .madoko .align-center pre {
+    text-align: left;
+  }
+  .madoko .align-center>* {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .madoko .align-left, .madoko .align-left>p {
+    text-align: left !important;
+  }
+  .madoko .align-left>* {
+    margin-left: 0pt !important;
+    margin-right: auto !important;
+  }
+  .madoko .align-right, .madoko .align-right>p {
+    text-align: right !important;
+  }
+  .madoko .align-right>* {
+    margin-left: auto !important;
+    margin-right: 0pt !important;
+  }
+  .madoko .align-center>table,
+  .madoko .align-left>table,
+  .madoko .align-right>table {
+    text-align: left !important;
+  }
+  .madoko .equation-before {
+    float: right;
+  }
+  .madoko .bibitem {
+    font-size: smaller;
+  }
+  .madoko .bibsearch {
+    font-size: x-small;
+    text-decoration:none;
+    color: black;
+    font-family: "Segoe UI Symbol", Symbola, serif;
+  }
+  .madoko .block, .madoko .figure, .madoko .bibitem, .madoko .equation, .madoko div.math {
+    margin-top: 1ex;
+    margin-bottom: 1ex;
+  }
+  .madoko .figure {
+    padding: 0.5em;
+    margin-left: 0pt;
+    margin-right: 0pt;
+  }
+  .madoko .hidden {
+    display: none;
+  }
+  .madoko .invisible {
+    visibility: hidden;
+  }
+  .madoko.preview .invisible {
+    visibility: visible;
+    opacity: 0.5;
+  }
+  .madoko code.code, .madoko span.code {
+    white-space: pre-wrap;
+  }
+  .madoko hr, hr.madoko {
+    border: none;
+    border-bottom: black solid 1px;
+    margin-bottom: 0.5ex;
+  }
+  .madoko .framed>*:first-child {
+    margin-top: 0pt;
+  }
+  .madoko .framed>*:last-child {
+    margin-bottom: 0pt;
+  }
+  .madoko ul.list-style-type-dash {
+      list-style-type: none !important;
+  }
+  .madoko ul.list-style-type-dash > li:before {
+      content: "\2013"; 
+      position: absolute;
+      margin-left: -1em; 
+  }
+  .madoko table.madoko {
+    border-collapse: collapse;
+  }
+  .madoko td, .madoko th {
+    padding: 0ex 0.5ex;
+    margin: 0pt;
+    vertical-align: top;
+  }
+  .madoko .cell-border-left {
+    border-left: 1px solid black;
+  }
+  .madoko .cell-border-right {
+    border-right: 1px solid black;
+  }
+  .madoko thead>tr:first-child>.cell-line,
+  .madoko tbody:first-child>tr:first-child>.cell-line {
+    border-top: 1px solid black;
+    border-bottom: none;
+  }
+  .madoko .cell-line, .madoko .cell-double-line {
+    border-bottom: 1px solid black;
+    border-top: none;
+  }
+  .madoko .cell-double-line {
+    border-top: 1px solid black;
+    padding-top: 1.5px !important;
+  }
+  .madoko .input-mathpre .MathJax_Display {
+    text-align: left !important;
+  }
+  .madoko div.input-mathpre {
+    text-align: left;
+    margin-top: 1.5ex;
+    margin-bottom: 1ex;
+  }
+  .madoko .math-rendering {
+    text-align: left;
+    white-space: pre;
+    color: gray;
+  }
+  .madoko .mathdisplay {
+    text-align: center;
+  }
+  .madoko .pretty table {
+    border-collapse: collapse;
+  }
+  .madoko .pretty td {
+    padding: 0em;
+  }
+  .madoko .pretty td.empty {
+    min-width: 1.5ex;
+  }
+  .madoko .pretty td.expander {
+    width: 100em;
+  }
+  body.madoko, .madoko .serif {
+    font-family: Cambria,"Times New Roman","Liberation Serif","Times",serif;
+  }
+  .madoko .sans-serif {
+    font-family: "Calibri", "Optima", sans-serif;
+  }
+  .madoko .symbol {
+    font-family: "Segoe UI Symbol", Symbola, serif;
+  }
+  body.madoko {  
+    -webkit-text-size-adjust: 100%;       
+    text-rendering: optimizeLegibility;
+  }
+  body.madoko {
+    max-width: 88ex; 
+    margin: 1em auto;
+    padding: 0em 2em;  
+  }
+  body.preview.madoko {
+    padding: 0em 1em;
+  }
+  .madoko p {
+    text-align: justify;
+  }
+  .madoko h1, .madoko h2, .madoko h3, .madoko h4 { 
+    margin-top: 1.22em; 
+    margin-bottom: 1ex;
+  }
+  .madoko h1+p, .madoko h2+p, .madoko h3+p, .madoko h4+p, .madoko h5+p  { 
+    margin-top: 1ex;    
+  }
+  .madoko h5, .madoko h6 { 
+    margin-top: 1ex;
+    font-size: 1em;
+  }
+  .madoko h5 { 
+    margin-bottom: 0.5ex;
+  }
+  .madoko h5 + p {
+    margin-top: 0.5ex;
+  }
+  .madoko h6 { 
+    margin-bottom: 0pt;
+  }
+  .madoko h6 + p {
+    margin-top: 0pt;
+  }
+  .madoko pre, .madoko code, .madoko kbd, .madoko samp, .madoko tt, 
+  .madoko .monospace, .madoko .token-indent, .madoko .reveal pre, .madoko .reveal code, .madoko .email {
+    font-family: Consolas,"Andale Mono WT","Andale Mono",Lucida Console,Monaco,monospace,monospace;
+    font-size: 0.85em;
+  }
+  .madoko pre code, .madoko .token-indent {
+    font-size: 0.95em;
+  }
+  .madoko pre code {
+    font-family: inherit !important;
+  }
+  .madoko ol.linenums li {
+    background-color: white;
+    list-style-type: decimal;
+  }
+  .madoko .remote {
+    background-color: #F0FFF0;
+  }
+  .madoko .remote + * {
+    margin-top: 0pt;
+  }
+  @media print {
+    body.madoko {
+      font-size: 10pt;
+    }
+    @page {
+      margin: 1in 1.5in;
+    }
+  }
+  @media only screen and (max-device-width:1024px) {
+    body.madoko {
+      padding: 0em 0.5em;    
+    }
+    .madoko li {
+      text-align: left;
+    }
+  }
+  
+    </style>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/reveal.js/2.6.2/css/reveal.min.css"  class="link">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/reveal.js/2.6.2/css/theme/sky.css"  class="link">
+  <script src="https://cdn.jsdelivr.net/reveal.js/2.6.2/lib/js/head.min.js"  class="script preview"></script>
+  <script src="https://cdn.jsdelivr.net/reveal.js/2.6.2/js/reveal.js"  class="script preview"></script>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/2.6.2/css/theme/sky.css" id="theme">    
+      <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/reveal.js/2.6.2/lib/js/html5shiv.js"></script>
+      <![endif]-->
+      <style>
+      body.madoko {
+        margin: 0pt;
+        padding: 0pt;
+        max-width: 100%;      
+      }
+      .madoko .reveal h1 {
+          font-size: 3.7em;
+      }
+      .madoko .reveal h2 {
+          font-size: 2.1em;
+      }
+      .reveal .authorblock .author {
+          font-size: 120%;
+          margin-bottom: 1ex;
+      }        
+      .reveal table {
+          margin-left: auto;
+          margin-right: auto;
+      }
+      .reveal pre table {
+        margin-left: 0pt;
+      }
+      .madoko .reveal pre.pretty {
+        padding-top: 0pt;
+        padding-bottom: 0pt;
+      }
+      .reveal li p {
+          text-align: left;
+      }
+      .reveal h2 {
+          margin-bottom: 0.7em;
+      }
+      .reveal section ul,
+      .reveal section ol {
+          margin-top: 0.35em;
+          margin-bottom: 0.35em;
+      }
+      .reveal section img.math-display {
+          padding: 1em;
+          box-shadow: none;
+          border: none;
+      }
+      .reveal section img.math-inline {
+          margin: 0pt;
+          padding: 0pt;
+          background-color: none;
+          box-shadow: none;
+          border: none;
+      }
+      .reveal section img {
+          box-shadow: none;
+          border: none;
+      }
+      .madoko .reveal pre {
+          border: 1px solid black;
+          word-wrap: normal;
+          background-color: white;
+          font-size: 0.7em;
+          padding: 0.7em;
+          line-height: 100%;
+          width: 100%;
+      }      
+      .reveal pre code, .reveal code {
+          padding: 0pt;
+      }
+      .reveal nav.toc {
+          line-height: 1em;
+          font-size: 60%;
+          overflow-y: auto;
+      }    
+      .reveal .tocitem {
+          text-align: left;
+      }
+      .reveal .toc>.tocblock .tocblock {
+          margin-left: 0.5em;
+      }   
+      .reveal .toc>.tocblock .tocblock .tocblock {
+          margin-left: 1em;
+      }
+      .reveal .bibliography {
+        height: 18em;
+        overflow-y: auto;
+        font-size: 0.8em;
+        line-height: 1.25;
+      }
+      .reveal section[data-smaller=""],
+      .reveal section[data-smaller="true"] {
+        font-size: 80%;
+        width: 110%;
+      }
+      .reveal .slides>section[data-smaller=""],
+      .reveal .slides>section[data-smaller="true"] {
+        left: -55%;
+      }
+      .reveal .details {
+        display: none;
+      }
+      .reveal[data-details=""] .details,
+      .reveal[data-details="true"] .details {
+        display: initial;
+      }
+      /* Display in the preview window */
+      html, body.madoko.preview, body.madoko.preview-full, .body.madoko {
+        height  : 100% !important;
+        width   : auto!important;
+        padding : 0pt !important;
+        margin  : 0pt !important;
+      }
+      body.madoko.preview, body.madoko.preview-full, .preview .body.madoko {
+        overflow: hidden !important;
+      }
+      body.preview .reveal .slides .fragment {
+        visibility: visible;
+        opacity: 0.5;
+      }
+      body.preview .reveal .slides .fragment.visible {
+        opacity: 1.0;
+      }
+      .preview .reveal div.notes,
+      .preview .reveal aside.notes {
+        display  : block;
+        position : absolute;
+        width    : 30%;
+        left     : 70%;
+        top      : -15%;
+        font-size: 50%;
+        border   : 1px solid black;
+        border-radius   : 10px;
+        background-color: white;
+      }
+      /* 'static' display in the preview window, unused for now */
+      body.preview.static div.reveal, 
+      body.preview.static div.ticreveal .slides, 
+      body.preview.static div.reveal section {
+        display: block !important;
+        position: relative !important;
+        width: auto !important;      
+      }
+      body.preview.static div.reveal section {
+        border: solid 1px black;
+        padding: 1em !important;
+        margin-top: 1em;
+        min-height: 15em;
+        top: 0pt;
+      }
+      body.madoko.preview.static section {
+        font-size: 75%;
+      }
+      body.madoko.preview.static {
+        padding: 0em 1em !important;
+      }
+      body.madoko.preview.static .reveal pre {
+        width: 95%;
+      }    
+      body.preview .reveal[data-details="false"] .details {
+        display: initial;
+        color: gray;
+      }
+      body.preview .reveal[data-long="false"] section[data-long] {
+        border-left: 2px black solid;
+      }
+      </style>
+      <script>    
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      window.revealConfig = {
+          controls: true,
+          progress: true,
+          history: true,
+          center: /^\s*(true|1)\s*$/i.test("true"),
+          slideNumber: /^\s*(true|1)\s*$/i.test("true"),
+          dependencies: [
+            { src: 'https://cdn.jsdelivr.net/reveal.js/2.6.2/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+            { src: 'https://cdn.jsdelivr.net/reveal.js/2.6.2/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+            { src: 'https://cdn.jsdelivr.net/reveal.js/2.6.2/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+          ],
+      };
+      function revealAddFragments() {
+        [].forEach.call(document.querySelectorAll( ".fragmented" ), function(elem0) {
+          var elem = (/^H\d$/.test(elem0.nodeName) ? elem0.parentNode : elem0);
+          [].forEach.call(elem.children, function(item) {
+            if (item==elem0) return;
+            if (item && !/\bfragment(ed)?\b/.test(item.className) && item.nodeType===1) {
+              item.className = item.className + " fragment";
+            }
+          });
+        });
+      }
+      function revealQuotedList(listType) {
+        //compatibility with Rmarkdown slides
+        [].forEach.call( document.querySelectorAll("blockquote>" + listType), function(ul) {
+          if (!/\bfragmented\b/.test(ul.className)) {
+            ul.className = ul.className + " fragmented";
+          }        
+          var quote = ul.parentNode;
+          if (quote.childElementCount===1) {
+            quote.parentNode.replaceChild(ul,quote);
+          }
+        });
+      }
+      function revealBuildToFragmented() {
+        [].forEach.call(document.querySelectorAll( ".build" ), function(elem) {
+          if (elem && !/\bfragmented\b/.test(elem.className) && elem.nodeType===1) {
+            elem.className = elem.className + " fragmented";
+          }
+        });
+      }
+      function revealDivNotesToAside() {
+        [].forEach.call(document.querySelectorAll("div.notes"), function(elem) {
+          var aside = document.createElement("ASIDE");
+          if (elem.id) aside.id = elem.id;
+          aside.className = elem.className;
+          [].forEach.call(elem.attributes, function(attr) {
+            aside.setAttribute( attr.name, attr.value );
+          });
+          aside.innerHTML = elem.innerHTML;
+          elem.parentNode.replaceChild(aside,elem);
+        });
+      }
+      function revealDataQuery() {
+        var reveal = document.querySelector(".reveal");
+        if (!reveal) return;
+        window.location.search.replace(/\bdata-(\w+)(?:=(\w+))?\b/g, function(matched,key,value) {
+          reveal.setAttribute("data-" + key, (value ? value : ""));
+          return matched;
+        });
+      }
+      function revealRemoveLong() {
+        // remove parts for 'long' presentation
+        if (/\bpreview(?![\w\-])/.test(document.body.className)) return;
+        var reveal = document.querySelector(".reveal");
+        if (!reveal) return;
+        var value = reveal.hasAttribute("data-long") ? reveal.getAttribute("data-long") : null;
+        if (value==null || value=="false" || value=="0") {
+          [].forEach.call( document.querySelectorAll("section[data-long]"), function(elem) {
+            elem.parentNode.removeChild(elem);
+          });
+        }
+      }
+      revealConfig.onLoad = function() {
+        revealConfig.getEmbeddedImages();
+        revealDataQuery();
+        revealRemoveLong();
+        revealQuotedList("ul");
+        revealQuotedList("ol");
+        revealBuildToFragmented();
+        revealDivNotesToAside();
+        revealAddFragments();
+      };
+      document.addEventListener("load",revealConfig.onLoad);    
+      document.addEventListener("DOMContentLoaded", function() {
+        if (typeof Reveal !== "undefined" && !Reveal.isReady()) {
+          revealConfig.onLoad();
+          Reveal.initialize(revealConfig);
+        }
+      });    
+      // add support for printing:
+      // use  ?print-pdf to get a pdf-printable version (in Chrome)
+      // use  ?print-paper to get a paper-printable version.
+      revealConfig.initPrint = function() {
+        var cssLink = null;
+        var bodyClass = null;
+        var cap = window.location.search.match(/\bprint-(\w+)\b/);
+        if (cap) {
+          bodyClass = cap[0];
+          cssLink = "https://cdn.jsdelivr.net/reveal.js/2.6.2/css/print/" + cap[1] + ".css";
+        }
+        if (cssLink) {
+          var link  = document.createElement( "link" );
+          link.rel  = "stylesheet";
+          link.type = "text/css";
+          link.href = cssLink;
+          var head = document.getElementsByTagName( 'head' )[0];
+          if (head) head.appendChild( link );
+        }
+        if (bodyClass) {
+          document.body.className = document.body.className + " " + bodyClass;
+        }
+      };
+      revealConfig.getEmbeddedImages = function() {
+        var images = {};
+        [].forEach.call( document.querySelectorAll("img[data-linkid]"), function(img) {
+          var linkid = img.getAttribute("data-linkid");
+          if (linkid) images["/" + linkid] = img.src;
+          var path = img.getAttribute("data-path");
+          if (path) images["/" + path] = img.src;
+        });     
+        [].forEach.call( document.querySelectorAll("section"), function(slide) {
+          var attrName = "data-background";
+          var image = slide.getAttribute(attrName);
+          if (!image) {
+            attrName = "data-background-image";
+            image = slide.getAttribute(attrName);
+          }
+          if (!image) return;
+          var cap = /^\s*!?\[([^\]]+)\]\s*$/.exec(image);
+          var href = images["/" + (cap ? cap[1] : image)];
+          if (!href) return;
+          if (attrName==="data-background" && /^data:/.test(href)) href = "url(" + href + ")";
+          slide.setAttribute(attrName, href);
+        });
+      };    
+      </script>
+  </head>
+<body class="madoko">
+
+<div class="body madoko" style="line-adjust:0">
+<div class="reveal" data-long="false" data-details="false" style="line-adjust:0">
+<div class="slides" style="line-adjust:0">
+
+<section class="titleblock align-center para-block" style="text-align:center;line-adjust:0">
+<div class="titleheader align-center" style="text-align:center;line-adjust:0">
+<h1 class="title para-block" style="font-weight:bold;margin-bottom:0.5ex;font-size:3em;line-adjust:0">Introduction to Spring Framework</h1>
+<h2 class="subtitle para-block" style="margin-bottom:0.5ex;font-size:1.8em;line-adjust:0">Motivation for spring and basics of how it works</h2></div></section>
+<section id="sec-content" class="section section1" data-section-depth="1"><h2 id="heading-sec-content" class="h1" data-heading-depth="1" style="display:block">Content</h2><span data-line=""></span>
+<nav class="toc toc-contents" style="height:20em">
+<div class="tocblock tocblock1">
+<div class="tocitem tocitem1" data-toc-target-elem="h1" data-toc-target="sec-content" data-toc-depth="1" data-toc-line="[1]{.heading-label}.&#8194;Content" style="toctarget:sec-content"><a href="#sec-content" class="localref"><span class="heading-label">1</span>.&#8194;Content</a></div>
+<div class="tocitem tocitem1" data-toc-target-elem="h1" data-toc-target="sec-motivation" data-toc-depth="1" data-toc-line="[2]{.heading-label}.&#8194;Motivation" style="toctarget:sec-motivation"><a href="#sec-motivation" class="localref"><span class="heading-label">2</span>.&#8194;Motivation</a></div>
+<div class="tocblock tocblock2">
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-problem-1" data-toc-depth="2" data-toc-line="[2.1]{.heading-label}.&#8194;Problem #1" style="toctarget:sec-problem-1"><a href="#sec-problem-1" class="localref"><span class="heading-label">2.1</span>.&#8194;Problem #1</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-problem-1---tight-coupling" data-toc-depth="2" data-toc-line="[2.2]{.heading-label}.&#8194;Problem #1 - Tight Coupling" style="toctarget:sec-problem-1---tight-coupling"><a href="#sec-problem-1---tight-coupling" class="localref"><span class="heading-label">2.2</span>.&#8194;Problem #1 - Tight Coupling</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-solution--decouple-by-injecting-dependencies" data-toc-depth="2" data-toc-line="[2.3]{.heading-label}.&#8194;Solution: Decouple by \&quot;Injecting\&quot; Dependencies" style="toctarget:sec-solution--decouple-by-injecting-dependencies"><a href="#sec-solution--decouple-by-injecting-dependencies" class="localref"><span class="heading-label">2.3</span>.&#8194;Solution: Decouple by &#8220;Injecting&#8221; Dependencies</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-decoupled-class---code-example" data-toc-depth="2" data-toc-line="[2.4]{.heading-label}.&#8194;Decoupled Class - Code Example" style="toctarget:sec-decoupled-class---code-example"><a href="#sec-decoupled-class---code-example" class="localref"><span class="heading-label">2.4</span>.&#8194;Decoupled Class - Code Example</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-injecting-dependencies---advantages" data-toc-depth="2" data-toc-line="[2.5]{.heading-label}.&#8194;\&quot;Injecting\&quot; Dependencies - Advantages" style="toctarget:sec-injecting-dependencies---advantages"><a href="#sec-injecting-dependencies---advantages" class="localref"><span class="heading-label">2.5</span>.&#8194;&#8220;Injecting&#8221; Dependencies - Advantages</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-problem-2---cross-cutting-concerns" data-toc-depth="2" data-toc-line="[2.6]{.heading-label}.&#8194;Problem #2 - Cross Cutting concerns" style="toctarget:sec-problem-2---cross-cutting-concerns"><a href="#sec-problem-2---cross-cutting-concerns" class="localref"><span class="heading-label">2.6</span>.&#8194;Problem #2 - Cross Cutting concerns</a></div></div>
+<div class="tocitem tocitem1" data-toc-target-elem="h1" data-toc-target="sec-problem-2---code-example" data-toc-depth="1" data-toc-line="[3]{.heading-label}.&#8194;Problem #2 - Code Example" style="toctarget:sec-problem-2---code-example"><a href="#sec-problem-2---code-example" class="localref"><span class="heading-label">3</span>.&#8194;Problem #2 - Code Example</a></div>
+<div class="tocblock tocblock2">
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-problem-2---code-example-contd" data-toc-depth="2" data-toc-line="[3.1]{.heading-label}.&#8194;Problem #2 - Code Example (Contd.)" style="toctarget:sec-problem-2---code-example-contd"><a href="#sec-problem-2---code-example-contd" class="localref"><span class="heading-label">3.1</span>.&#8194;Problem #2 - Code Example (Contd.)</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-solution---aspect-oriented-programming" data-toc-depth="2" data-toc-line="[3.2]{.heading-label}.&#8194;Solution - Aspect Oriented Programming" style="toctarget:sec-solution---aspect-oriented-programming"><a href="#sec-solution---aspect-oriented-programming" class="localref"><span class="heading-label">3.2</span>.&#8194;Solution - Aspect Oriented Programming</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-aspect-oriented-programming-in-spring" data-toc-depth="2" data-toc-line="[3.3]{.heading-label}.&#8194;Aspect-oriented-programming in Spring" style="toctarget:sec-aspect-oriented-programming-in-spring"><a href="#sec-aspect-oriented-programming-in-spring" class="localref"><span class="heading-label">3.3</span>.&#8194;Aspect-oriented-programming in Spring</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-problem-3---do-not-repeat-yourself-dry" data-toc-depth="2" data-toc-line="[3.4]{.heading-label}.&#8194;Problem #3 - Do not repeat yourself (DRY)" style="toctarget:sec-problem-3---do-not-repeat-yourself-dry"><a href="#sec-problem-3---do-not-repeat-yourself-dry" class="localref"><span class="heading-label">3.4</span>.&#8194;Problem #3 - Do not repeat yourself (DRY)</a></div></div>
+<div class="tocitem tocitem1" data-toc-target-elem="h1" data-toc-target="sec-basics-of-spring" data-toc-depth="1" data-toc-line="[4]{.heading-label}.&#8194;Basics of Spring" style="toctarget:sec-basics-of-spring"><a href="#sec-basics-of-spring" class="localref"><span class="heading-label">4</span>.&#8194;Basics of Spring</a></div>
+<div class="tocblock tocblock2">
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-need-for-spring" data-toc-depth="2" data-toc-line="[4.1]{.heading-label}.&#8194;Need for Spring" style="toctarget:sec-need-for-spring"><a href="#sec-need-for-spring" class="localref"><span class="heading-label">4.1</span>.&#8194;Need for Spring</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-spring-versions" data-toc-depth="2" data-toc-line="[4.2]{.heading-label}.&#8194;Spring versions" style="toctarget:sec-spring-versions"><a href="#sec-spring-versions" class="localref"><span class="heading-label">4.2</span>.&#8194;Spring versions</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-spring-is-modular" data-toc-depth="2" data-toc-line="[4.3]{.heading-label}.&#8194;Spring is Modular" style="toctarget:sec-spring-is-modular"><a href="#sec-spring-is-modular" class="localref"><span class="heading-label">4.3</span>.&#8194;Spring is Modular</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-spring-projects" data-toc-depth="2" data-toc-line="[4.4]{.heading-label}.&#8194;Spring Projects" style="toctarget:sec-spring-projects"><a href="#sec-spring-projects" class="localref"><span class="heading-label">4.4</span>.&#8194;Spring Projects</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-spring-high-level-view" data-toc-depth="2" data-toc-line="[4.5]{.heading-label}.&#8194;Spring High Level View" style="toctarget:sec-spring-high-level-view"><a href="#sec-spring-high-level-view" class="localref"><span class="heading-label">4.5</span>.&#8194;Spring High Level View</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-spring-container" data-toc-depth="2" data-toc-line="[4.6]{.heading-label}.&#8194;Spring container" style="toctarget:sec-spring-container"><a href="#sec-spring-container" class="localref"><span class="heading-label">4.6</span>.&#8194;Spring container</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-spring-beans" data-toc-depth="2" data-toc-line="[4.7]{.heading-label}.&#8194;Spring beans" style="toctarget:sec-spring-beans"><a href="#sec-spring-beans" class="localref"><span class="heading-label">4.7</span>.&#8194;Spring beans</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-solution-1---dependency-injection-using-spring---code-example-13" data-toc-depth="2" data-toc-line="[4.8]{.heading-label}.&#8194;Solution #1 - Dependency Injection using Spring - Code Example (1/3)" style="toctarget:sec-solution-1---dependency-injection-using-spring---code-example-13"><a href="#sec-solution-1---dependency-injection-using-spring---code-example-13" class="localref"><span class="heading-label">4.8</span>.&#8194;Solution #1 - Dependency Injection using Spring - Code Example (1/3)</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-solution-1---dependency-injection-using-spring---code-example-contd" data-toc-depth="2" data-toc-line="[4.9]{.heading-label}.&#8194;Solution #1 - Dependency Injection using Spring - Code Example (Contd..)" style="toctarget:sec-solution-1---dependency-injection-using-spring---code-example-contd"><a href="#sec-solution-1---dependency-injection-using-spring---code-example-contd" class="localref"><span class="heading-label">4.9</span>.&#8194;Solution #1 - Dependency Injection using Spring - Code Example (Contd..)</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-how-to-inject-beans" data-toc-depth="2" data-toc-line="[4.10]{.heading-label}.&#8194;How to inject beans" style="toctarget:sec-how-to-inject-beans"><a href="#sec-how-to-inject-beans" class="localref"><span class="heading-label">4.10</span>.&#8194;How to inject beans</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-how-to-configure-beans" data-toc-depth="2" data-toc-line="[4.11]{.heading-label}.&#8194;How to configure beans" style="toctarget:sec-how-to-configure-beans"><a href="#sec-how-to-configure-beans" class="localref"><span class="heading-label">4.11</span>.&#8194;How to configure beans</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-java-based-config" data-toc-depth="2" data-toc-line="[4.12]{.heading-label}.&#8194;Java based config" style="toctarget:sec-java-based-config"><a href="#sec-java-based-config" class="localref"><span class="heading-label">4.12</span>.&#8194;Java based config</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-how-to-inject-beans" data-toc-depth="2" data-toc-line="[4.13]{.heading-label}.&#8194;How to inject beans" style="toctarget:sec-how-to-inject-beans"><a href="#sec-how-to-inject-beans" class="localref"><span class="heading-label">4.13</span>.&#8194;How to inject beans</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-how-to-inject-beans" data-toc-depth="2" data-toc-line="[4.14]{.heading-label}.&#8194;How to inject beans" style="toctarget:sec-how-to-inject-beans"><a href="#sec-how-to-inject-beans" class="localref"><span class="heading-label">4.14</span>.&#8194;How to inject beans</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-how-to-inject-beans-" data-toc-depth="2" data-toc-line="[4.15]{.heading-label}.&#8194;How to inject beans:" style="toctarget:sec-how-to-inject-beans-"><a href="#sec-how-to-inject-beans-" class="localref"><span class="heading-label">4.15</span>.&#8194;How to inject beans:</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-annotation-based-config-" data-toc-depth="2" data-toc-line="[4.16]{.heading-label}.&#8194;Annotation based config:" style="toctarget:sec-annotation-based-config-"><a href="#sec-annotation-based-config-" class="localref"><span class="heading-label">4.16</span>.&#8194;Annotation based config:</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-how-to-get-started-with-spring-" data-toc-depth="2" data-toc-line="[4.17]{.heading-label}.&#8194;How to get started with spring:" style="toctarget:sec-how-to-get-started-with-spring-"><a href="#sec-how-to-get-started-with-spring-" class="localref"><span class="heading-label">4.17</span>.&#8194;How to get started with spring:</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="sec-injecting-dependencies---advantages-backup" data-toc-depth="2" data-toc-line="[4.18]{.heading-label}.&#8194;\&quot;Injecting\&quot; Dependencies - Advantages (Backup)" style="toctarget:sec-injecting-dependencies---advantages-backup"><a href="#sec-injecting-dependencies---advantages-backup" class="localref"><span class="heading-label">4.18</span>.&#8194;&#8220;Injecting&#8221; Dependencies - Advantages (Backup)</a></div></div></div></nav></section>
+<section id="sec-motivation" class="section section1" data-section-depth="1"><h2 id="heading-sec-motivation" class="h1" data-heading-depth="1" style="display:block">Motivation</h2></section>
+<section id="sec-problem-1" class="section section2" data-section-depth="2"><h3 id="heading-sec-problem-1" class="h2" data-heading-depth="2" style="display:block">Problem #1</h3>
+<pre class="para-block pre-fenced pre-fenced3 language-java lang-java java colorized" style="display:block"><code>  <span style="color:blue">package</span> sia.knights;
+
+<span style="color:blue">public</span> <span style="color:blue">class</span> <span style="color:teal">DamselRescuingKnight</span> <span style="color:blue">implements</span> <span style="color:teal">Knight</span> {
+
+  <span style="color:blue">private</span> <span style="color:teal">RescueDamselQuest</span> quest;
+
+  <span style="color:blue">public</span> <span style="color:teal">DamselRescuingKnight</span>() {
+    <span style="color:blue">this</span>.quest = <span style="color:blue">new</span> <span style="color:teal">RescueDamselQuest</span>();
+  }
+
+  <span style="color:blue">public</span> <span style="color:teal">void</span> embarkOnQuest() {
+    quest.embark();
+  }
+
+}</code></pre>
+<aside class="notes">
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">what is wrong with this class?</li></ul></aside></section>
+<section id="sec-problem-1---tight-coupling" class="section section2" data-section-depth="2"><h3 id="heading-sec-problem-1---tight-coupling" class="h2" data-heading-depth="2" style="display:block">Problem #1 - Tight Coupling</h3>
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">Quest is a dependency of a DamselRescuingKnight class.
+</li>
+<li class="li ul-li list-star-li compact-li">Tightly coupled code - knight can only go on RescueDamselQuest 
+
+<aside class="notes">
+<p class="p noindent">how would knight slay the dragon?</p></aside></li>
+<li class="li ul-li list-star-li compact-li">Object initialized within class with new operator. how would you test?
+</li></ul>
+</section>
+<section id="sec-solution--decouple-by-injecting-dependencies" class="section section2" data-section-depth="2"><h3 id="heading-sec-solution--decouple-by-injecting-dependencies" class="h2" data-heading-depth="2" style="display:block">Solution: Decouple by &#8220;Injecting&#8221; Dependencies</h3>
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">Giving object its own dependencies than having to as opposed to object acquiring its own dependencies
+</li>
+<li class="li ul-li list-star-li compact-li">&#8220;Foo&#8221; class has dependencies &#8220;Bar&#8221; and &#8220;Baz&#8221;, which are &#8220;injected&#8221; into &#8220;Foo&#8221;.
+</li></ul>
+
+<p class="p noindent"><img src="images/dependency_injection.png" title="dependency_injection" alt="dependency_injection" data-path="images/dependency_injection.png" data-linkid="dependency_injection" style="width:50%;max-width:200%">
+</p></section>
+<section id="sec-decoupled-class---code-example" class="section section2" data-section-depth="2"><h3 id="heading-sec-decoupled-class---code-example" class="h2" data-heading-depth="2" style="display:block">Decoupled Class - Code Example</h3>
+<pre class="para-block pre-fenced pre-fenced3 language-java lang-java java colorized" style="display:block"><code><span style="color:blue">package</span> sia.knights;
+  
+<span style="color:blue">public</span> <span style="color:blue">class</span> <span style="color:teal">BraveKnight</span> <span style="color:blue">implements</span> <span style="color:teal">Knight</span> {
+
+  <span style="color:blue">private</span> <span style="color:teal">Quest</span> quest;
+
+  <span style="color:blue">public</span> <span style="color:teal">BraveKnight</span>(<span style="color:teal">Quest</span> quest) {
+    <span style="color:blue">this</span>.quest = quest;
+  }
+
+  <span style="color:blue">public</span> <span style="color:teal">void</span> embarkOnQuest() {
+    quest.embark();
+  }
+
+}</code></pre>
+<aside class="notes">
+<p class="p noindent">  Quest is an interface
+  Quest is &#8220;injected&#8221; into brave knight. 
+  He can even slay the dragon, if you &#8220;inject&#8221; such a quest.</p></aside></section>
+<section id="sec-injecting-dependencies---advantages" class="section section2" data-section-depth="2"><h3 id="heading-sec-injecting-dependencies---advantages" class="h2" data-heading-depth="2" style="display:block">&#8220;Injecting&#8221; Dependencies - Advantages</h3>
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">BraveKnight no longer coupled to a quest. 
+</li>
+<li class="li ul-li list-star-li compact-li">Mock an implementation of Quest to test it.
+
+<aside class="notes">
+<p class="p noindent">Backup slide</p></aside></li></ul>
+</section>
+<section id="sec-problem-2---cross-cutting-concerns" class="section section2" data-section-depth="2"><h3 id="heading-sec-problem-2---cross-cutting-concerns" class="h2" data-heading-depth="2" style="display:block">Problem #2 - Cross Cutting concerns</h3>
+<p class="p noindent">Business logic is mixed with logging, metrics, etc.
+</p>
+<p class="p indent">Logging, metrics, etc are common across components
+</p>
+<p class="p indent"><img src="images/aspects.jpg" title="aspects" alt="aspects" data-path="images/aspects.jpg" data-linkid="aspects" style="width:auto;max-width:90%">
+</p></section>
+<section id="sec-problem-2---code-example" class="section section1" data-section-depth="1"><h2 id="heading-sec-problem-2---code-example" class="h1" data-heading-depth="1" style="display:block">Problem #2 - Code Example</h2>
+<pre class="para-block pre-fenced pre-fenced3 language-java lang-java java colorized" style="display:block"><code><span style="color:blue">package</span> sia.knights;
+
+<span style="color:blue">import</span> java.io.<span style="color:teal">PrintStream</span>;
+
+<span style="color:blue">public</span> <span style="color:blue">class</span> <span style="color:teal">Minstrel</span> {
+
+  <span style="color:blue">private</span> <span style="color:teal">PrintStream</span> stream;
+  
+  <span style="color:blue">public</span> <span style="color:teal">Minstrel</span>(<span style="color:teal">PrintStream</span> stream) {
+    <span style="color:blue">this</span>.stream = stream;
+  }
+
+  <span style="color:blue">public</span> <span style="color:teal">void</span> singBeforeQuest() {
+    stream.println(<span style="color:maroon">&quot;</span><span style="color:maroon">Fa la la, the knight is so brave!</span><span style="color:maroon">&quot;</span>);
+  }
+
+  <span style="color:blue">public</span> <span style="color:teal">void</span> singAfterQuest() {
+    stream.println(<span style="color:maroon">&quot;</span><span style="color:maroon">Tee hee hee, the brave knight </span><span style="color:maroon">&quot;</span> +
+            <span style="color:maroon">&quot;</span><span style="color:maroon">did embark on a quest!</span><span style="color:maroon">&quot;</span>);
+  }
+
+}</code></pre></section>
+<section id="sec-problem-2---code-example-contd" class="section section2" data-section-depth="2"><h3 id="heading-sec-problem-2---code-example-contd" class="h2" data-heading-depth="2" style="display:block">Problem #2 - Code Example (Contd.)</h3>
+<p class="p noindent">Should a knight manage his own minstrel?
+</p>
+<pre class="para-block pre-fenced pre-fenced3 language-java lang-java java colorized" style="display:block"><code><span style="color:blue">package</span> sia.knights;
+  
+<span style="color:blue">public</span> <span style="color:blue">class</span> <span style="color:teal">BraveKnight</span> <span style="color:blue">implements</span> <span style="color:teal">Knight</span> {
+
+  <span style="color:blue">private</span> <span style="color:teal">Quest</span> quest; <span style="color:darkgreen">//magically injected</span>
+  <span style="color:blue">private</span> <span style="color:teal">Minstrel</span> minstrel; <span style="color:darkgreen">//magically injected</span>
+
+  <span style="color:blue">public</span> <span style="color:teal">BraveKnight</span>(<span style="color:teal">Quest</span> quest) {
+    <span style="color:blue">this</span>.quest = quest;
+    <span style="color:blue">this</span>.minstrel = minstrel;
+  }
+
+  <span style="color:blue">public</span> <span style="color:teal">void</span> embarkOnQuest() {
+    minstrel.singBeforeQuest();
+    quest.embark();
+    minstrel.singAfterQuest();
+  }
+
+}</code></pre></section>
+<section id="sec-solution---aspect-oriented-programming" class="section section2" data-section-depth="2"><h3 id="heading-sec-solution---aspect-oriented-programming" class="h2" data-heading-depth="2" style="display:block">Solution - Aspect Oriented Programming</h3>
+<p class="p noindent">Now, we can focus on business logic - logging, metrics security, etc. do not &#8220;litter&#8221; application logic
+</p>
+<p class="p indent"><img src="images/aspecsCorrectWay.jpg" title="aspecsCorrectWay" alt="aspecsCorrectWay" data-path="images/aspecsCorrectWay.jpg" data-linkid="aspecscorrectway" style="width:auto;max-width:90%">
+</p></section>
+<section id="sec-aspect-oriented-programming-in-spring" class="section section2" data-section-depth="2"><h3 id="heading-sec-aspect-oriented-programming-in-spring" class="h2" data-heading-depth="2" style="display:block">Aspect-oriented-programming in Spring</h3>
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">Spring has support for aspects.
+</li>
+<li class="li ul-li list-star-li compact-li">Need provide some config to spring
+</li></ul>
+</section>
+<section id="sec-problem-3---do-not-repeat-yourself-dry" class="section section2" data-section-depth="2"><h3 id="heading-sec-problem-3---do-not-repeat-yourself-dry" class="h2" data-heading-depth="2" style="display:block">Problem #3 - Do not repeat yourself (DRY)</h3>
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">Eg writing db code - get connection, handle exception, retry - everytime
+</li>
+<li class="li ul-li list-star-li compact-li">Solution - Spring reduces boilerplate code by providing templates (eg JDBC template)
+</li></ul>
+</section>
+<section id="sec-basics-of-spring" class="section section1" data-section-depth="1"><h2 id="heading-sec-basics-of-spring" class="h1" data-heading-depth="1" style="display:block">Basics of Spring</h2></section>
+<section id="sec-need-for-spring" class="section section2" data-section-depth="2"><h3 id="heading-sec-need-for-spring" class="h2" data-heading-depth="2" style="display:block">Need for Spring</h3>
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">Name &#8220;Spring&#8221; comes from &#8220;winter&#8221; of traditional J2EE
+</li>
+<li class="li ul-li list-star-li compact-li">J2EE - heavy, complex and require extending framewok classes, rigid xml config etc. (dunno much)
+</li>
+<li class="li ul-li list-star-li compact-li">Light weight &#8220;container&#8221; to provide services to <strong class="strong-star2">POJOs</strong>. e.g @transactional
+</li>
+<li class="li ul-li list-star-li compact-li">(POJO = Plain Old Java Object i.e. not implement/extend framework classes)
+</li></ul>
+</section>
+<section id="sec-spring-versions" class="section section2" data-section-depth="2"><h3 id="heading-sec-spring-versions" class="h2" data-heading-depth="2" style="display:block">Spring versions</h3>
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">Developed in 2002-3 by Rod Johnson. Spring 1.0 in 2004
+</li>
+<li class="li ul-li list-star-li compact-li">2006 -&gt; Spring 2.0 -&gt; Simplified XML Config
+</li>
+<li class="li ul-li list-star-li compact-li">2006 -&gt; Spring 2.5 -&gt; Annotation Config
+</li>
+<li class="li ul-li list-star-li compact-li">2016 (June) &#8211;&gt; Latest Major Verion = Spring 4 
+</li></ul>
+</section>
+<section id="sec-spring-is-modular" class="section section2" data-section-depth="2"><h3 id="heading-sec-spring-is-modular" class="h2" data-heading-depth="2" style="display:block">Spring is Modular</h3>
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">Bunch of different projects and sub-projects depending on what you want
+</li>
+<li class="li ul-li list-star-li compact-li">Has a lot of projects - Being added and developed actively!
+</li>
+<li class="li ul-li list-star-li compact-li">Lets you do a LOT of different stuff.
+</li></ul>
+</section>
+<section id="sec-spring-projects" class="section section2" data-section-depth="2"><h3 id="heading-sec-spring-projects" class="h2" data-heading-depth="2" style="display:block">Spring Projects</h3>
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">Official website: https://spring.io/ 
+</li>
+<li class="li ul-li list-star-li compact-li">Spring is Popular: https://springoneplatform.io/2016/sponsors
+</li></ul>
+
+<aside class="notes">
+<p class="p noindent">These days spring boot! But fundamentals same.
+For now, lets focus on core Spring Framework.</p></aside></section>
+<section id="sec-spring-high-level-view" class="section section2" data-section-depth="2"><h3 id="heading-sec-spring-high-level-view" class="h2" data-heading-depth="2" style="display:block">Spring High Level View</h3>
+<p class="p noindent"><img src="images/spring-high-level-view.png" title="spring high level view" alt="spring high level view" data-path="images/spring-high-level-view.png" data-linkid="spring high level view" style="width:100%;max-width:90%">
+</p>
+<aside class="notes">
+<p class="p noindent">Plus template beans which spring provide (depend on project you choose)</p></aside></section>
+<section id="sec-spring-container" class="section section2" data-section-depth="2"><h3 id="heading-sec-spring-container" class="h2" data-heading-depth="2" style="display:block">Spring container</h3>
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">Spring container is responsible for creating objects( <strong class="strong-star2">&#8220;managed objects&#8221;</strong> or<strong class="strong-star2"> &#8220;beans&#8221;</strong>) and managing their complete life cycle from creation till destruction.
+</li>
+<li class="li ul-li list-star-li compact-li">Which objects should it manage? depends upon what configuration you provide to spring.
+</li>
+<li class="li ul-li list-star-li compact-li">Spring container = bean bag :P
+
+<aside class="notes">
+<p class="p noindent">Not every class need to be a bean - can create beans &#8220;outside&#8221; spring container.</p></aside></li></ul>
+</section>
+<section id="sec-spring-beans" class="section section2" data-section-depth="2"><h3 id="heading-sec-spring-beans" class="h2" data-heading-depth="2" style="display:block">Spring beans</h3>
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">A <strong class="strong-star2">Bean</strong> is an object that is instantiated, assembled, and otherwise managed by a Spring container.
+</li>
+<li class="li ul-li list-star-li compact-li">Generally a singleton (default), but need not be (called prototype bean)
+</li></ul>
+</section>
+<section id="sec-solution-1---dependency-injection-using-spring---code-example-13" class="section section2" data-section-depth="2"><h3 id="heading-sec-solution-1---dependency-injection-using-spring---code-example-13" class="h2" data-heading-depth="2" style="display:block">Solution #1 - Dependency Injection using Spring - Code Example (1/3)</h3>
+<p class="p noindent">Lets go back to our BraveKnight class: 
+</p>
+<pre class="para-block pre-fenced pre-fenced3 language-java lang-java java colorized" style="display:block"><code><span style="color:blue">package</span> sia.knights;
+  
+<span style="color:blue">public</span> <span style="color:blue">class</span> <span style="color:teal">BraveKnight</span> <span style="color:blue">implements</span> <span style="color:teal">Knight</span> {
+
+  <span style="color:blue">private</span> <span style="color:teal">Quest</span> quest;
+
+  <span style="color:blue">public</span> <span style="color:teal">BraveKnight</span>(<span style="color:teal">Quest</span> quest) {
+    <span style="color:blue">this</span>.quest = quest;
+  }
+
+  <span style="color:blue">public</span> <span style="color:teal">void</span> embarkOnQuest() {
+    quest.embark();
+  }
+
+}</code></pre></section>
+<section id="sec-solution-1---dependency-injection-using-spring---code-example-contd" class="section section2" data-section-depth="2"><h3 id="heading-sec-solution-1---dependency-injection-using-spring---code-example-contd" class="h2" data-heading-depth="2" style="display:block">Solution #1 - Dependency Injection using Spring - Code Example (Contd..)</h3>
+<p class="p noindent">Suppose we have this implementation of quest interface:
+</p>
+<pre class="para-block pre-fenced pre-fenced3 language-java lang-java java colorized" style="display:block"><code> <span style="color:blue">package</span> sia.knights;
+
+<span style="color:blue">import</span> java.io.<span style="color:teal">PrintStream</span>;
+
+<span style="color:blue">public</span> <span style="color:blue">class</span> <span style="color:teal">SlayDragonQuest</span> <span style="color:blue">implements</span> <span style="color:teal">Quest</span> {
+
+  <span style="color:blue">private</span> <span style="color:teal">PrintStream</span> stream;
+
+  <span style="color:blue">public</span> <span style="color:teal">SlayDragonQuest</span>(<span style="color:teal">PrintStream</span> stream) {
+    <span style="color:blue">this</span>.stream = stream;
+  }
+
+  <span style="color:blue">public</span> <span style="color:teal">void</span> embark() {
+    stream.println(<span style="color:maroon">&quot;</span><span style="color:maroon">Embarking on quest to slay the dragon!</span><span style="color:maroon">&quot;</span>);
+  }
+
+}</code></pre></section>
+<section id="sec-how-to-inject-beans" class="section section2" data-section-depth="2"><h3 id="heading-sec-how-to-inject-beans" class="h2" data-heading-depth="2" style="display:block">How to inject beans</h3>
+<p class="p noindent">Finally, here&#39;s the main method
+</p>
+<pre class="para-block pre-fenced pre-fenced3 language-java lang-java java colorized" style="display:block"><code><span style="color:blue">package</span> sia.knights;
+
+<span style="color:blue">import</span> org.springframework.context.support.
+                   <span style="color:teal">ClassPathXmlApplicationContext</span>;
+
+<span style="color:blue">public</span> <span style="color:blue">class</span> <span style="color:teal">KnightMain</span> {
+
+  <span style="color:blue">public</span> <span style="color:blue">static</span> <span style="color:teal">void</span> main(<span style="color:teal">String</span>[] args) <span style="color:blue">throws</span> <span style="color:teal">Exception</span> {
+    <span style="color:teal">ClassPathXmlApplicationContext</span> context = 
+        <span style="color:blue">new</span> <span style="color:teal">ClassPathXmlApplicationContext</span>(
+            <span style="color:maroon">&quot;</span><span style="color:maroon">META-INF/spring/knight.xml</span><span style="color:maroon">&quot;</span>); 
+    <span style="color:darkgreen">//or get context from KnighConfig.class if you choose</span>
+    <span style="color:teal">Knight</span> knight = context.getBean(<span style="color:teal">Knight</span>.<span style="color:blue">class</span>);
+    knight.embarkOnQuest();
+    context.close();
+  }
+
+}</code></pre></section>
+<section id="sec-how-to-configure-beans" class="section section2" data-section-depth="2"><h3 id="heading-sec-how-to-configure-beans" class="h2" data-heading-depth="2" style="display:block">How to configure beans</h3>
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">Java based config (recommended)
+</li>
+<li class="li ul-li list-star-li compact-li">Xml based config ( not recommended)
+</li>
+<li class="li ul-li list-star-li compact-li">Annotation based config. 
+</li>
+<li class="li ul-li list-star-li compact-li">Mix and match the above 3
+</li></ul>
+</section>
+<section id="sec-java-based-config" class="section section2" data-section-depth="2"><h3 id="heading-sec-java-based-config" class="h2" data-heading-depth="2" style="display:block">Java based config</h3>
+<p class="p noindent">Here <strong class="strong-star2">Configuration</strong> is the metadata we provide to spring to create those beans.
+(can be in java, or in xml)
+Can have multiple of these configuration files which can be imported.
+Advantage - one place, centralized, and compiled!
+</p>
+<pre class="para-block pre-fenced pre-fenced3 language-java lang-java java colorized" style="display:block"><code><span style="color:blue">package</span> sia.knights.config;
+
+<span style="color:blue">import</span> org.springframework.context.annotation.<span style="color:teal">Bean</span>;
+<span style="color:blue">import</span> org.springframework.context.annotation.<span style="color:teal">Configuration</span>;
+
+<span style="color:blue">import</span> sia.knights.<span style="color:teal">BraveKnight</span>;
+<span style="color:blue">import</span> sia.knights.<span style="color:teal">Knight</span>;
+<span style="color:blue">import</span> sia.knights.<span style="color:teal">Quest</span>;
+<span style="color:blue">import</span> sia.knights.<span style="color:teal">SlayDragonQuest</span>;
+
+<span style="color:gray">@Configuration</span>
+<span style="color:gray">@Import</span> (other config files) 
+<span style="color:blue">public</span> <span style="color:blue">class</span> <span style="color:teal">KnightConfig</span> {
+
+  <span style="color:gray">@Bean</span>
+  <span style="color:blue">public</span> <span style="color:teal">Knight</span> knight() {
+    <span style="color:blue">return</span> <span style="color:blue">new</span> <span style="color:teal">BraveKnight</span>(quest());
+  }
+  
+  <span style="color:gray">@Bean</span>
+  <span style="color:blue">public</span> <span style="color:teal">Quest</span> quest() {
+    <span style="color:blue">return</span> <span style="color:blue">new</span> <span style="color:teal">SlayDragonQuest</span>(<span style="color:teal">System</span>.out);
+  }
+
+}</code></pre></section>
+<section id="sec-how-to-inject-beans" class="section section2" data-section-depth="2"><h3 id="heading-sec-how-to-inject-beans" class="h2" data-heading-depth="2" style="display:block">How to inject beans</h3>
+<p class="p noindent">Why? Some libraries dont support java based config. (Eg: BAS Java)
+</p>
+<p class="p indent"><img src="images/xmlConfig.jpg" title="xmlConfig" alt="xmlConfig" data-path="images/xmlConfig.jpg" data-linkid="xmlconfig" style="width:100%;max-width:90%">
+</p></section>
+<section id="sec-how-to-inject-beans" class="section section2" data-section-depth="2"><h3 id="heading-sec-how-to-inject-beans" class="h2" data-heading-depth="2" style="display:block">How to inject beans</h3>
+<p class="p noindent">Annotation based config
+</p>
+<pre class="para-block pre-fenced pre-fenced3 language-java lang-java java colorized" style="display:block"><code><span style="color:blue">package</span> sia.knights.config;
+
+<span style="color:blue">import</span> org.springframework.context.annotation.<span style="color:teal">Bean</span>;
+<span style="color:blue">import</span> org.springframework.context.annotation.<span style="color:teal">Configuration</span>;
+
+<span style="color:blue">import</span> sia.knights.<span style="color:teal">BraveKnight</span>;
+<span style="color:blue">import</span> sia.knights.<span style="color:teal">Knight</span>;
+<span style="color:blue">import</span> sia.knights.<span style="color:teal">Quest</span>;
+<span style="color:blue">import</span> sia.knights.<span style="color:teal">SlayDragonQuest</span>;
+
+<span style="color:gray">@Configuration</span>
+<span style="color:gray">@ComponentScan</span> (basePackages = <span style="color:maroon">&quot;</span><span style="color:maroon">sia.knights</span><span style="color:maroon">&quot;</span>)
+<span style="color:blue">public</span> <span style="color:blue">class</span> <span style="color:teal">KnightConfig</span> {
+
+  <span style="color:gray">@Autowired</span>
+  <span style="color:blue">private</span> <span style="color:teal">Quest</span> quest; <span style="color:darkgreen">//need quest to have @Component, and return a bean</span>
+  
+  <span style="color:gray">@Bean</span>
+  <span style="color:blue">public</span> <span style="color:teal">Knight</span> knight() {
+    <span style="color:blue">return</span> <span style="color:blue">new</span> <span style="color:teal">BraveKnight</span>(quest());
+  }
+}</code></pre></section>
+<section id="sec-how-to-inject-beans-" class="section section2" data-section-depth="2"><h3 id="heading-sec-how-to-inject-beans-" class="h2" data-heading-depth="2" style="display:block">How to inject beans:</h3>
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">beans could be scattered, and you may need to scan the entire package.
+</li>
+<li class="li ul-li list-star-li compact-li">@Autowire mean autowire by type first; only one bean, else use @qualifier. @Resource -  autowire by name
+</li></ul>
+
+<aside class="notes">
+<p class="p noindent">Much better if i could demo</p></aside></section>
+<section id="sec-annotation-based-config-" class="section section2" data-section-depth="2"><h3 id="heading-sec-annotation-based-config-" class="h2" data-heading-depth="2" style="display:block">Annotation based config:</h3></section>
+<section id="sec-how-to-get-started-with-spring-" class="section section2" data-section-depth="2"><h3 id="heading-sec-how-to-get-started-with-spring-" class="h2" data-heading-depth="2" style="display:block">How to get started with spring:</h3>
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">Safari books online! 
+</li>
+<li class="li ul-li list-star-li compact-li">Video lectures - Orielly Learn Spring and Spring boot
+</li>
+<li class="li ul-li list-star-li compact-li">Book - Spring in Action 4th edition
+</li></ul>
+</section>
+<section id="sec-injecting-dependencies---advantages-backup" class="section section2" data-section-depth="2"><h3 id="heading-sec-injecting-dependencies---advantages-backup" class="h2" data-heading-depth="2" style="display:block">&#8220;Injecting&#8221; Dependencies - Advantages (Backup)</h3>
+<p class="p noindent"><code class="code code1"></code>`java
+package sia.knights;
+import static org.mockito.Mockito.*;
+</p>
+<p class="p indent">import org.junit.Test;
+</p>
+<p class="p indent">import sia.knights.BraveKnight;
+import sia.knights.Quest;
+</p>
+<p class="p indent">public class BraveKnightTest {
+</p>
+<p class="p indent">  public void knightShouldEmbarkOnQuest() {
+    Quest mockQuest = mock(Quest.class);
+    BraveKnight knight = new BraveKnight(mockQuest);
+    knight.embarkOnQuest();
+    verify(mockQuest, times(1)).embark();
+  }
+</p>
+<p class="p indent">}
+`</p></section></div></div><span data-line=""></span></div>
+</body>
+<script>
+    // initialize printing
+    revealConfig.initPrint();
+    // initialize background embedded images
+    revealConfig.getEmbeddedImages();
+    </script>
+</html>
